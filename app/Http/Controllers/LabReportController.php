@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Consultation;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class LabReportController extends Controller
@@ -9,9 +11,37 @@ class LabReportController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('labs.index');
+        $query = Consultation::where('account_status', 1)
+            ->where('order_status', 1)
+            ->where('lab_status', 0)
+            ->where('completed', 0)
+            ->with('patient')
+            ->orderByDesc('visit_date');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->whereHas('patient', function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('sex', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $consultations = $query->paginate(10);
+
+        if ($request->ajax()) {
+            $pagination = view('pagination', ['users' => $consultations])->render();
+
+            return response()->json([
+                'accounts' => $consultations,
+                'count' => $consultations->total(),
+                'pagination' => $pagination,
+            ]);
+        }
+
+        return view('labs.index', compact('consultations'));
     }
 
     /**
@@ -27,21 +57,53 @@ class LabReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'lab_comment' => 'required|string',
+            'test_comments' => 'array',
+            'test_comments.*' => 'nullable|string',
+        ]);
+
+        // Find the consultation
+        $consultation = Consultation::findOrFail($request->consultation_id);
+
+        // Update the general lab comment
+        $consultation->lab_comment = $request->input('lab_comment');
+        $consultation->lab_status = 1;
+        $consultation->save();
+
+        // Update the comments for each order
+        if ($request->has('test_comments')) {
+            foreach ($request->input('test_comments') as $orderId => $comment) {
+                $order = Order::findOrFail($orderId);
+                $order->comment = $comment;
+                $order->save();
+            }
+        }
+
+        // Redirect back with a success message
+        return redirect()->route('labreports.index')
+            ->with('status', 'Lab results sent successfully')
+            ->with('type', 'success');
     }
+
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function edit($id)
     {
-        //
+        $consultation = Consultation::with('patient', 'orders.test')->findOrFail($id);
+
+        $orders = $consultation->orders;
+
+        return view('labs.edit', compact('consultation', 'orders'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function show($consultationId)
     {
         //
     }

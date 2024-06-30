@@ -34,7 +34,7 @@
         <table class="table table-striped">
             <thead>
                 <tr class="border-bottom border-danger">
-                    <th>ID</th>
+                    <th>S/N</th>
                     <th>Title</th>
                     <th>Name</th>
                     <th>Phone</th>
@@ -75,25 +75,10 @@
                 },
                 success: function(response) {
                     if (response && response.users && response.users.data.length > 0) {
-                        var usersHtml = '';
-                        $.each(response.users.data, function(index, user) {
-                            usersHtml += `
-                                <tr class="border-bottom border-danger">
-                                    <td>${user.id}</td>
-                                    <td>${user.title}</td>
-                                    <td>${user.name}</td>
-                                    <td>${user.phone}</td>
-                                    <td>${user.email}</td>
-                                    <td>
-                                        <div class="d-flex flex-row">
-                                            <a href="/users/${user.id}/edit" class="btn me-1 btn-sm btn-primary">Edit</a>
-                                            <button class="btn btn-sm btn-danger delete" data-id="${user.id}" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</button>
-                                            </div>
-                                    </td>
-                                </tr>`;
-                        });
-                        $('#users-tbody').html(usersHtml);
-                        $('#no-records').hide();
+                        var userIds = response.users.data.map(user => user.id);
+                        //render table
+                        fetchPrivileges(userIds, response.users.data);
+                        //render pagination
                         var paginationHtml = response.pagination;
                         $('#pagination-links').html(paginationHtml);
                     } else {
@@ -106,6 +91,59 @@
                     console.error('Ajax request error:', status, error);
                 }
             });
+        }
+
+        function fetchPrivileges(userIds, users) {
+            $.ajax({
+                url: '{{ route("privileges.index") }}',
+                method: 'GET',
+                data: {
+                    user_ids: userIds
+                },
+                success: function(response) {
+                    if (response && response.privileges) {
+                        renderUsersTable(users, response.privileges);
+                    } else {
+                        console.error('No privileges found for users.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ajax request error:', status, error);
+                }
+            });
+        }
+
+        function renderUsersTable(users, privileges) {
+            var usersHtml = '';
+            users.forEach(function(user,index) {
+                var userId = user.id;
+                var userPrivileges = privileges[userId];
+
+                // Check if delete_system privilege exists and is true for this user
+                var authorize = userPrivileges && userPrivileges.length > 0 && userPrivileges[0].delete_system === 1;
+
+                usersHtml += `
+            <tr class="border-bottom border-danger">
+                <td>${index + 1}</td> 
+                <td>${user.title}</td>
+                <td>${user.name}</td>
+                <td>${user.phone}</td>
+                <td>${user.email}</td>
+                <td>
+                    ${!authorize ?
+                        `<div class="d-flex flex-row">
+                            <a href="/users/${user.id}/edit" class="btn me-1 btn-sm btn-primary">Edit</a>
+                            <a href="/privileges/${user.id}/edit" class="btn me-1 btn-sm btn-primary">Edit Privileges</a>
+                            <button class="btn btn-sm btn-danger delete" data-id="${user.id}" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</button>
+                        </div>` :
+                        `Admin`
+                    }
+                </td>
+            </tr>`;
+            });
+
+            $('#users-tbody').html(usersHtml);
+            $('#no-records').hide();
         }
 
         fetchUsers();
@@ -140,12 +178,14 @@
                     if (response.success) {
                         $('#deleteUserModal').modal('hide');
 
-                        $('#flash-message').html('<div class="alert alert-info">' + response.message + '</div>');
+                        $('#flash-message').html('<div class="alert alert-info">' + response
+                            .message + '</div>');
 
                         fetchUsers();
                     } else {
                         $('#deleteUserModal').modal('hide');
-                        $('#flash-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                        $('#flash-message').html('<div class="alert alert-danger">' + response
+                            .message + '</div>');
 
                     }
 

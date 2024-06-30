@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SystemSetting;
 use Illuminate\Http\Request;
 
 class SystemController extends Controller
@@ -11,7 +12,8 @@ class SystemController extends Controller
      */
     public function index()
     {
-        return view('system.index');
+        $system = SystemSetting::where('id',1)->first();
+        return view('system.index',['system'=>$system]);
     }
 
     /**
@@ -49,9 +51,18 @@ class SystemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'system_name' => ['required', 'string','max:255'],
+            'email' => ['required', 'string','max:255','unique:system_settings,email,' . $id],
+            'phone' => ['required', 'string','max:255','unique:system_settings,phone,' . $id],
+        ]);
+
+        $record = SystemSetting::findOrFail($id);
+        $record->update($request->all());
+
+        return back()->with(['status'=>'System settings updated successfuly','type'=>'info']);
     }
 
     /**

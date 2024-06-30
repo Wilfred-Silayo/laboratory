@@ -11,7 +11,7 @@
         @csrf
         @method('PUT')
 
-        <div class="mb-3">
+        <div class="mb-3 col-12 col-sm-8 col-md-6">
             <x-input-label for="title" :value="__('Title')" />
             <div>
                 <x-radio-input id="title_mr" name="title" value="Mr" :checked="$user->title === 'Mr'" required />
@@ -33,19 +33,19 @@
             <x-input-error :messages="$errors->get('title')" class="mt-2" />
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 col-12 col-sm-8 col-md-6">
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" type="text" name="name" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 col-12 col-sm-8 col-md-6">
             <x-input-label for="phone" :value="__('Phone')" />
             <x-text-input id="phone" type="tel" name="phone" :value="old('phone', $user->phone)" required autofocus autocomplete="tel" />
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 col-12 col-sm-8 col-md-6">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" type="email" name="email" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />

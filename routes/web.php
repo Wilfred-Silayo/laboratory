@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\DiseasesTestController;
 use App\Http\Controllers\LabReportController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientRecordController;
 use App\Http\Controllers\PrivilegeController;
@@ -68,7 +69,7 @@ Route::middleware(['auth.verified'])->group(function () {
     Route::get('/patients', [PatientController::class, 'index'])->name('patients.index')->middleware('check.privilege:view_patients');
     Route::get('/patients/create', [PatientController::class, 'create'])->name('patients.create')->middleware('check.privilege:add_patient');
     Route::post('/patients', [PatientController::class, 'store'])->name('patients.store')->middleware('check.privilege:add_patient');
-    Route::get('/patients/{patient}', [PatientController::class, 'show'])->name('patients.show')->middleware('check.privilege:view_patients');
+    Route::post('/patients/{patient}', [PatientController::class, 'show'])->name('patients.show')->middleware('check.privilege:view_patients');
     Route::get('/patients/{patient}/edit', [PatientController::class, 'edit'])->name('patients.edit')->middleware('check.privilege:edit_patient');
     Route::put('/patients/{patient}', [PatientController::class, 'update'])->name('patients.update')->middleware('check.privilege:edit_patient');
     Route::delete('/patients/{patient}', [PatientController::class, 'destroy'])->name('patients.destroy')->middleware('check.privilege:delete_patient');
@@ -106,27 +107,25 @@ Route::middleware(['auth.verified'])->group(function () {
     Route::put('/consultations/{consultation}', [ConsultationController::class, 'update'])->name('consultations.update')->middleware('check.privilege:edit_consultation');
     Route::delete('/consultations/{consultation}', [ConsultationController::class, 'destroy'])->name('consultations.destroy')->middleware('check.privilege:delete_consultation');
 
+    Route::post('/consultations/{consultation}/save-result', [ConsultationController::class, 'saveResult'])
+    ->name('consultations.saveResult');
+
+    Route::get('/patients/consultations/{patient}', [ConsultationController::class, 'history'])->name('patients.consultations.history')->middleware('check.privilege:view_consultations');
+    
+    Route::get('/consultations/{consultation}/print', [ConsultationController::class, 'print'])->name('consultations.print')->middleware('check.privilege:view_consultations');
+
+    Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create')->middleware('check.privilege:add_consultation');
+
     /**
      * System
      */
     Route::get('/system', [SystemController::class, 'index'])->name('system.index')->middleware('check.privilege:view_systems');
     Route::get('/system/create', [SystemController::class, 'create'])->name('system.create')->middleware('check.privilege:add_system');
     Route::post('/system', [SystemController::class, 'store'])->name('system.store')->middleware('check.privilege:add_system');
-    Route::get('/system/{system}', [SystemController::class, 'show'])->name('system.show')->middleware('check.privilege:view_systems');
+    //Route::get('/system/{system}', [SystemController::class, 'show'])->name('system.show')->middleware('check.privilege:view_systems');
     Route::get('/system/{system}/edit', [SystemController::class, 'edit'])->name('system.edit')->middleware('check.privilege:edit_system');
     Route::put('/system/{system}', [SystemController::class, 'update'])->name('system.update')->middleware('check.privilege:edit_system');
     Route::delete('/system/{system}', [SystemController::class, 'destroy'])->name('system.destroy')->middleware('check.privilege:delete_system');
-
-    /**
-     * Passwords
-     */
-    Route::get('/password', [PasswordController::class, 'index'])->name('password.index');
-    Route::get('/password/create', [PasswordController::class, 'create'])->name('password.create');
-    Route::post('/password', [PasswordController::class, 'store'])->name('password.store');
-    Route::get('/password/{password}', [PasswordController::class, 'show'])->name('password.show');
-    Route::get('/password/{password}/edit', [PasswordController::class, 'edit'])->name('password.edit');
-    Route::put('/password/{password}', [PasswordController::class, 'update'])->name('password.update');
-    Route::delete('/password/{password}', [PasswordController::class, 'destroy'])->name('password.destroy');
 
     /**
      * Privileges

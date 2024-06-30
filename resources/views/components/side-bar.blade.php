@@ -10,7 +10,7 @@
      <!-- Sidebar user panel (optional) -->
      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
        <div class="image">
-         <img src="{{asset('storage/profile_images/'.auth()->user()->profile_pic)}}" class="img-circle elevation-2" alt="User Image">
+         <img style="width: 60px; height:60px;" src="{{asset('storage/profile_images/'.auth()->user()->profile_pic)}}" class="rounded-circle elevation-2" alt="User Image">
        </div>
        <div class="info">
          <a href="{{route('profile.edit')}}" class="d-block fw-bold">{{auth()->user()->name}}</a>
@@ -46,7 +46,9 @@
 
          <x-nav-link route="password.index" icon="ellipsis-h" title="Password" />
 
+         @if(auth()->user()->privileges->view_reports)
          <li class="nav-header fw-bold">MISCELLANEOUS</li>
+         @endif
 
          @if(auth()->user()->privileges->view_reports)
          <x-nav-link route="reports.index" icon="columns" title="Reports" />
@@ -55,12 +57,16 @@
          @if(auth()->user()->privileges->add_test)
          <x-nav-link route="tests.index" icon="vials" title="Test Prices" />
          @endif
-
-         <li class="nav-header fw-bold">SYSTEM</li>
+         
          @if(auth()->user()->privileges->delete_system)
+         <li class="nav-header fw-bold">SYSTEM</li>
          <x-nav-link route="users.data" icon="user" title="Users" />
          <x-nav-link route="system.index" icon="tools" title="System Settings" class="mb-4" />
          @endif
+
+         <div class="mb-5"></div>
+         <div class="mb-5"></div>
+
 
        </ul>
      </nav>

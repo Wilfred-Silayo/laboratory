@@ -1,4 +1,4 @@
-@props(['type' => 'text', 'id' => '', 'name' => '', 'value' => '', 'autocomplete' => ''])
+@props(['type' => 'text', 'id' => '', 'name' => '', 'value' => '', 'autocomplete' => '', 'placeholder'=>''])
 
 @php
     $classes = 'form-control';
@@ -7,4 +7,4 @@
     }
 @endphp
 
-<input type="{{ $type }}" id="{{ $id }}" name="{{ $name }}" value="{{ $value }}" autocomplete="{{$autocomplete}}" class="{{ $classes }}" autofocus>
+<input type="{{ $type }}" id="{{ $id }}" name="{{ $name }}" value="{{ $value }}" placeholder="{{$placeholder}}" autocomplete="{{$autocomplete}}" class="{{ $classes }}" autofocus>

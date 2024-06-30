@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('consultation_id')->constrained()->constrained()->onDelete('cascade');;
+            $table->decimal('total_amount', 10, 2);
+            $table->enum('status', ['Paid', 'Unpaid']);
             $table->timestamps();
         });
     }

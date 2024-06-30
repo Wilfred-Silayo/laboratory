@@ -4,10 +4,12 @@
 
 @section('content')
 
-<!-- Full height container to center the content -->
-<div class="container-fluid vh-100  overflow-auto d-flex bg-light justify-content-center align-items-center">
 
-    <div class="card col-12 col-md-6 mt-3 mt-sm-1 col-sm-8 bg-white p-4">
+<!-- Full height container to center the content -->
+<div class="container-fluid d-flex bg-light justify-content-center align-items-center">
+    <div class="mt-5 mb-md-0"></div>
+
+    <div class="card col-12 col-md-6 mt-3 mt-sm-1 col-sm-8 bg-white mb-5 mb-sm-0 p-4">
         <h3 class="fw-bold text-start text-md-center mt-2">D2 LABORATORY</h3>
         <div class="card-header bg-white mb-2 fw-bold ps-0">
             Please enter your credentials to login
@@ -17,7 +19,7 @@
         <!-- End Session Status -->
         <div class="row">
             <div class="col-12 col-sm-8 col-md-6 mb-3 mb-sm-2 mb-md-none">
-                <img src="{{asset('favicon.jpg')}}" alt="Lab logo" class="w-100 border-2 border-danger">
+                <img src="{{ asset('favicon.jpg') }}" alt="Lab logo" class="w-100 border-2 border-danger">
             </div>
             <div class="col-12 col-sm-8 col-md-6 pb-3 pb-md-0">
                 <form method="POST" action="{{ route('login.store') }}">
@@ -26,7 +28,8 @@
                     <!-- Email Address -->
                     <div class="form-group mb-4">
                         <x-input-label for="email" :value="__('Email')" />
-                        <x-text-input id="email" type="email" name="email" :value="old('email')" autocomplete="username" />
+                        <x-text-input id="email" type="email" name="email" :value="old('email')"
+                            autocomplete="username" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
@@ -58,9 +61,7 @@
                     </div>
                 </form>
             </div>
-
         </div>
-
     </div>
 </div>
 

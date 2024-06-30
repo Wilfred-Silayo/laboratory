@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('disease_tests', function (Blueprint $table) {
             $table->id();
+            $table->string('test_code');
+            $table->string('test_name');
+            $table->string('test_for');
+            $table->decimal('test_price', 10, 2);
             $table->timestamps();
         });
     }

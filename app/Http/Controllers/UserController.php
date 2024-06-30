@@ -25,7 +25,7 @@ class UserController extends Controller
             });
         }
 
-        $users = $query->paginate(10);
+        $users = $query->orderBy('created_at','desc')->paginate(10);
         $pagination = view('pagination', ['users' => $users])->render();
 
         if ($request->expectsJson()) {
@@ -37,9 +37,6 @@ class UserController extends Controller
 
         return view('users.users');
     }
-
-
-
 
     public function destroy(User $user)
     {
@@ -58,7 +55,7 @@ class UserController extends Controller
             'title' => 'required|string|max:10',
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:15|unique:users,phone,' . $user->id,
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'email' => 'required|string|email|lowercase|max:255|unique:users,email,' . $user->id,
         ]);
 
         $user->update($request->all());
