@@ -29,7 +29,8 @@ class PatientController extends Controller
                                 ->whereColumn('patient_id', 'patients.id');
                 })->where('order_status', 1)
                   ->where('lab_status', 1)
-                  ->where('account_status', 1);
+                  ->where('account_status', 1)
+                  ->where('completed', 1);
             });
         });
 

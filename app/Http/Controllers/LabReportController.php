@@ -105,7 +105,7 @@ class LabReportController extends Controller
      */
     public function show($consultationId)
     {
-        //
+        
     }
 
     /**

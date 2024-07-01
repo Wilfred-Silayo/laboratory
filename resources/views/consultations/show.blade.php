@@ -19,10 +19,9 @@
                     <th>Consultation Date</th>
                     <th>Symptoms</th>
                     <th>Clinical Comment</th>
-                    <th>Lab Comment</th>
                     <th>Tests</th>
                     <th>Test Comments</th>
-                    <th>Result Comment</th>
+                    <th>General Result Comment</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,14 +30,13 @@
                     <td>{{ $consultation->created_at->format('Y-m-d') }}</td>
                     <td>{{ $consultation->symptom }}</td>
                     <td>{{ $consultation->clinical_comment }}</td>
-                    <td>{{ $consultation->lab_comment }}</td>
                     <td>
                         @foreach($consultation->tests as $test)
                         <span>{{ $test->test_code }}</span><br>
                         @endforeach
                     </td>
                     <td>
-                        @foreach($consultation->tests as $test)
+                        @foreach($consultation->orders as $test)
                         <span>{{ $test->comment }}</span><br>
                         @endforeach
                     </td>

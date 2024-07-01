@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Consultation;
+use App\Models\SystemSetting;
 use Barryvdh\DomPDF\Facade\PDF;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -15,7 +18,6 @@ class ReportController extends Controller
     public function index()
     {
         return view('reports.index');
-        
     }
 
     /**
@@ -33,34 +35,24 @@ class ReportController extends Controller
         return view('reports.financial', compact('consultations'));
     }
 
-    public function generateReport(Request $request)
+    public function show(Request $request)
     {
         $month = $request->input('month');
 
-        $consultations = Consultation::with(['patient', 'orders.test'])
-            ->whereMonth('created_at', $month)
-            ->where('account_status', true)
+        $consultations = Consultation::with(['patient', 'orders', 'account'])
+            ->whereMonth('visit_date', Carbon::parse($month)->month)
+            ->whereYear('visit_date', Carbon::parse($month)->year)
+            ->where('completed', true)
             ->get();
-
-        $pdf = PDF::loadView('reports.financial_report_pdf', [
-            'consultations' => $consultations
+        
+        $system = SystemSetting::where('id', 1)->first();
+        
+        $pdf = PDF::loadView('reports.financial-pdf', [
+            'consultations' => $consultations,
+            'system'=>$system,
         ]);
 
         return $pdf->download('financial_report.pdf');
-    }
-
-    public function showReport(Request $request)
-    {
-        $month = $request->input('month');
-
-        $consultations = Consultation::with(['patient', 'orders.test'])
-            ->whereMonth('created_at', $month)
-            ->where('account_status', true)
-            ->get();
-
-        return view('reports.financial_report', [
-            'consultations' => $consultations
-        ]);
     }
 
     /**
@@ -74,9 +66,25 @@ class ReportController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function generate(Request $request)
     {
-        //
+        $month = $request->get('month');
+        $consultations = Consultation::whereMonth('visit_date', $month)->get();
+
+        $data = [
+            'consultations' => $consultations,
+        ];
+
+        $view = view('reports.financial-pdf', $data)->render();
+
+        // Initialize Dompdf with custom options
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($view);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        return $dompdf->stream('financial_report.pdf');
     }
 
     /**

@@ -34,7 +34,8 @@ class OrderController extends Controller
         // Update the order_status to 1
         $consultation = Consultation::findOrFail($consultationId);
         $consultation->order_status = 1;
-        $consultation->order_comment=$request->clinical_comment;
+        $consultation->clinical_comment=$request->clinical_comment;
+        $consultation->symptoms=$request->symptom;
         $consultation->save();
 
         return redirect()->route('consultations.index')->with('status', 'Tests successfully added to the order ready for payments.');

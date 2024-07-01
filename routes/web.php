@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\ConsultationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiseasesTestController;
 use App\Http\Controllers\LabReportController;
 use App\Http\Controllers\OrderController;
@@ -18,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 /**
  * Dashboard route
  */
-Route::middleware(['auth.verified'])->name('dashboard')->get('/dashboard', function () {
-    return view('dashboard');
-});
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth.verified']);
 
 /**
  * Profile routes
@@ -47,7 +46,7 @@ Route::middleware(['auth.verified'])->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index')->middleware('check.privilege:view_reports');
     Route::get('/reports/create', [ReportController::class, 'create'])->name('reports.create')->middleware('check.privilege:create_report');
     Route::post('/reports', [ReportController::class, 'store'])->name('reports.store')->middleware('check.privilege:create_report');
-    Route::get('/reports/{report}', [ReportController::class, 'show'])->name('reports.show')->middleware('check.privilege:view_reports');
+    Route::get('/reports/{month}', [ReportController::class, 'show'])->name('reports.show')->middleware('check.privilege:view_reports');
     Route::get('/reports/{report}/edit', [ReportController::class, 'edit'])->name('reports.edit')->middleware('check.privilege:edit_report');
     Route::put('/reports/{report}', [ReportController::class, 'update'])->name('reports.update')->middleware('check.privilege:edit_report');
     Route::delete('/reports/{report}', [ReportController::class, 'destroy'])->name('reports.destroy')->middleware('check.privilege:delete_report');

@@ -18,14 +18,15 @@
                     <th>Clinical Comment</th>
                     <th>Tests</th>
                     <th>Test Comments</th>
+                    <th>Lab Comments</th>
                     <th>Result Comment</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{ $consultation->created_at->format('Y-m-d') }}</td>
-                    <td>{{ $consultation->symptom }}</td>
-                    <td>{{ $consultation->order_comment }}</td>
+                    <td>{{ $consultation->symptoms }}</td>
+                    <td>{{ $consultation->clinical_comment }}</td>
                     <td>
                         @foreach($results as $result)
                         <span>{{ $result->test_code }}</span><br>
@@ -36,7 +37,8 @@
                         <span>{{ $result->comment }}</span><br>
                         @endforeach
                     </td>
-                    <td>{{ $consultation->lab_comment }}</td>
+                    <td>{{$consultation->lab_comment}}</td>
+                    <td>{{ $consultation->result_comment }}</td>
                 </tr>
             </tbody>
         </table>
@@ -51,7 +53,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
-        @if ($consultation->lab_comment)
+        @if ($consultation->completed)
         <div class="d-flex justify-content-end">
         <a href="{{ route('consultations.print', $consultation->id) }}" class="btn btn-primary">Print</a>
         </div>

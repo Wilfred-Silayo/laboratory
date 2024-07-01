@@ -85,7 +85,7 @@ class AccountController extends Controller
         $consultation = Consultation::with(['patient', 'orders.test'])->findOrFail($consultationId);
         $orders = $consultation->orders;
         $totalAmount = $orders->sum(function ($order) {
-            return $order->test->price;
+            return $order->test_price;
         });
 
         $pdf = PDF::loadView('accounts.receipt', [
@@ -103,7 +103,7 @@ class AccountController extends Controller
         $consultation = Consultation::with(['patient', 'orders.test'])->findOrFail($consultationId);
         $orders = $consultation->orders;
         $totalAmount = $orders->sum(function ($order) {
-            return $order->test->price;
+            return $order->test_price;
         });
 
         return view('accounts.show', [

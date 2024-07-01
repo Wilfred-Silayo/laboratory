@@ -34,8 +34,8 @@
                 <tbody>
                     @foreach($orders as $order)
                     <tr>
-                        <td>{{ $order->test->name }}</td>
-                        <td>{{ number_format($order->test->price, 2) }}</td>
+                        <td>{{ $order->test_code }}</td>
+                        <td>{{ number_format($order->test_price, 2) }}</td>
                     </tr>
                     @endforeach
                 </tbody>

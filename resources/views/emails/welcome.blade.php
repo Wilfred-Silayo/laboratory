@@ -6,7 +6,7 @@ Your account has been successfully created. Below are your login details:
 - **Username:** {{ $user->email }}
 - **Password:** {{ $password }}
 
-@component('mail::button', ['url' => url('/login')])
+@component('mail::button', ['url' => url('/')])
 Login Now
 @endcomponent
 
