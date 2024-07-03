@@ -28,7 +28,7 @@
                 @foreach($consultations as $consultation)
                 <tr>
                     <td>{{ $consultation->created_at->format('Y-m-d') }}</td>
-                    <td>{{ $consultation->symptom }}</td>
+                    <td>{{ $consultation->symptoms }}</td>
                     <td>{{ $consultation->clinical_comment }}</td>
                     <td>
                         @foreach($consultation->tests as $test)

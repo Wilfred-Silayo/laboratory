@@ -66,8 +66,8 @@
             <tbody>
                 <tr>
                     <td>{{ $consultation->created_at->format('Y-m-d') }}</td>
-                    <td>{{ $consultation->symptom }}</td>
-                    <td>{{ $consultation->order_comment }}</td>
+                    <td>{{ $consultation->symptoms }}</td>
+                    <td>{{ $consultation->clinical_comment }}</td>
                     <td>
                         @foreach($results as $result)
                         <span>{{ $result->test_code }}</span><br>

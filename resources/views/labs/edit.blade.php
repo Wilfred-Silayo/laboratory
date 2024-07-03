@@ -20,9 +20,9 @@
 
         <div class="card-body">
             <div class="row mb-2">
-                <div class="col-md-6">
+                <div class="col border p-1">
                     <h5>Clinical Comments</h5>
-                    <p>{{ $consultation->order_comment }}</p>
+                    <p class="text-primary">{{ $consultation->clinical_comment }}</p>
                 </div>
             </div>
 

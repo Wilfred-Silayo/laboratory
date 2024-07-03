@@ -60,8 +60,8 @@ class LabReportController extends Controller
 
         $request->validate([
             'lab_comment' => 'required|string',
-            'test_comments' => 'array',
-            'test_comments.*' => 'nullable|string',
+            'test_comments' => 'array|required',
+            'test_comments.*' => 'required|string',
         ]);
 
         // Find the consultation
