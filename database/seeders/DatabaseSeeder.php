@@ -18,10 +18,10 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $user = User::factory()->create([
-            'name' => 'Wilfred Silayo',
-            'email' => 'wilfredsilayo99@gmail.com',
+            'name' => 'Derick Titus',
+            'email' => 'dericktitus888@gmail.com',
             'title' => 'Mr',
-            'phone' => '0683415683',
+            'phone' => '0000000000',
         ]);
 
          // Create admin privileges

@@ -21,7 +21,7 @@
         <div class="card-body">
             <div class="row mb-2">
                 <div class="col border p-1">
-                    <h5>Clinical Comments</h5>
+                    <h5>Plan</h5>
                     <p class="text-primary">{{ $consultation->clinical_comment }}</p>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <input type="hidden" name="consultation_id" value="{{$consultation->id}}">
                 <div class="row mb-4">
                     <div class="col-md-12">
-                        <h5>General Lab Comment</h5>
+                        <h5>General Lab Result</h5>
                         <textarea name="lab_comment" class="form-control" rows="3">{{ old('lab_comment', $consultation->lab_comment) }}</textarea>
                     </div>
                 </div>

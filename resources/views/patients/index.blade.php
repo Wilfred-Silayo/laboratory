@@ -36,7 +36,8 @@
                 <tr class="border-bottom border-danger">
                     <th>S/N</th>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>Occupation</th>
+                    <th>Address</th>
                     <th>Date of Birth</th>
                     <th>Gender</th>
                     <th>Action</th>
@@ -92,7 +93,8 @@ $(document).ready(function() {
                             <tr class="border-bottom border-danger">
                                 <td>${index +1 }</td>
                                 <td>${patient.name}</td>
-                                <td>${patient.email}</td>
+                                <td>${patient.occupation}</td>
+                                <td>${patient.address}</td>
                                 <td>${patient.dob}</td>
                                 <td>${patient.sex}</td>
                                 <td>

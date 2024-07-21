@@ -5,7 +5,7 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <p class="navbar-brand">D2 LABORATORY</p>
+      <p class="navbar-brand">2D LABORATORY</p>
     </ul>
 
     <!-- Right navbar links -->

@@ -17,11 +17,11 @@
             <thead>
                 <tr>
                     <th>Consultation Date</th>
-                    <th>Symptoms</th>
-                    <th>Clinical Comment</th>
-                    <th>Tests</th>
-                    <th>Test Comments</th>
-                    <th>General Result Comment</th>
+                    <th>Consultation Notes</th>
+                    <th>Plan</th>
+                    <th>Test</th>
+                    <th>Lab Result</th>
+                    <th>Lab Comment</th>
                 </tr>
             </thead>
             <tbody>

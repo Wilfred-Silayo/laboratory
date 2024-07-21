@@ -30,12 +30,12 @@
 
         </div>
         <div class="row">
-            <!-- Email Address -->
+            <!-- Address -->
             <div class="col-12 col-sm-6">
                 <div class="mt-4">
-                    <x-input-label for="email" :value="__('Email')" />
-                    <x-text-input id="email" type="email" name="email" :value="old('email')" required autocomplete="username" />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <x-input-label for="address" :value="__('Address')" />
+                    <x-text-input id="address" type="text" name="address" :value="old('address')" required autocomplete="username" />
+                    <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
             </div>
 
@@ -56,6 +56,15 @@
                     <x-input-label for="dob" :value="__('Date of Birth')" />
                     <x-text-input id="dob" type="date" name="dob" :value="old('dob')" required autofocus autocomplete="dob" />
                     <x-input-error :messages="$errors->get('dob')" class="mt-2" />
+                </div>
+            </div>
+
+            <!-- Occupation -->
+            <div class="col-12 col-sm-6">
+                <div class="mt-4">
+                    <x-input-label for="occupation" :value="__('Occupation')" />
+                    <x-text-input id="occupation" type="text" name="occupation" :value="old('occupation')" required autocomplete="username" />
+                    <x-input-error :messages="$errors->get('occupation')" class="mt-2" />
                 </div>
             </div>
         </div>

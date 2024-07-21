@@ -38,7 +38,8 @@ class PatientController extends Controller
             $search = $request->get('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('address', 'LIKE', "%{$search}%")
+                    ->orWhere('occupation', 'LIKE', "%{$search}%")
                     ->orWhere('sex', 'LIKE', "%{$search}%");
             });
         }
@@ -75,15 +76,17 @@ class PatientController extends Controller
             'sex' => ['required', 'string'],
             'dob' => ['required', 'date'],
             'phone' => ['required', 'string', 'max:15', 'unique:' . Patient::class],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Patient::class],
+            'address' => ['required', 'string','max:255'],
+            'occupation' => ['required', 'string','max:255'],
         ]);
 
         $user = Patient::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'address' => $request->address,
             'phone' => $request->phone,
             'sex' => $request->sex,
             'dob' => $request->dob,
+            'occupation' => $request->occupation,
         ]);
 
         return redirect()->route('patients.index')->with('status', 'Patient registred successfully.');
@@ -119,7 +122,8 @@ class PatientController extends Controller
             'sex' => ['required', 'string'],
             'dob' => ['required', 'date'],
             'phone' => ['required', 'string', 'max:15', 'unique:patients,phone,' . $patient->id],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:patients,email,' . $patient->id],
+            'address' => ['required', 'string', 'max:255',],
+            'occupation' => ['required', 'string','max:255'],
         ]);
 
         $patient->update($request->all());

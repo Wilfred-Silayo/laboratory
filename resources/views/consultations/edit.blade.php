@@ -29,11 +29,11 @@
         <div class="row">
             <div class="col-12 border col-md-6">
                 <div class="row mb-2">
-                    <p class="text-primary">Write symptoms below (Required)</p>
+                    <p class="text-primary">Write Consultation notes below (Required)</p>
                     <x-text-area name="symptom" rows="10" cols="50"></x-text-area>
                 </div>
                 <div class="row">
-                    <p class="text-primary">Write clinical comment below (Optional)</p>
+                    <p class="text-primary">Write Plan below (Optional)</p>
                     <x-text-area name="clinical_comment" rows="10" cols="50"></x-text-area>
                 </div>
             </div>

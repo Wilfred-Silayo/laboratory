@@ -9,7 +9,7 @@
     <title>D2 Laboratory | @yield('title')</title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="{{ asset('favicon.jpg') }}" type="image/jpg">
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/jpg">
 
     <!-- bootstrap css -->
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">

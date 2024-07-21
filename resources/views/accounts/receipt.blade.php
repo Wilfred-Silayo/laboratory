@@ -19,6 +19,8 @@
                     <p><strong>Full Name:</strong> {{ $consultation->patient->name }}</p>
                     <p><strong>Age:</strong> {{ \Carbon\Carbon::parse($consultation->patient->dob)->age }}</p>
                     <p><strong>Gender:</strong> {{ $consultation->patient->sex }}</p>
+                    <p><strong>Address:</strong> {{ $consultation->patient->address }}</p>
+                    <p><strong>Occupation:</strong> {{ $consultation->patient->occupation }}</p>
                     <p><strong>Visit Date:</strong> {{ $consultation->created_at->format('Y-m-d') }}</p>
                 </div>
             </div>

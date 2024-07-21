@@ -14,12 +14,12 @@
             <thead>
                 <tr>
                     <th>Consultation Date</th>
-                    <th>Symptoms</th>
-                    <th>Clinical Comment</th>
-                    <th>Tests</th>
-                    <th>Test Comments</th>
-                    <th>Lab Comments</th>
-                    <th>Result Comment</th>
+                    <th>Consultation Notes</th>
+                    <th>Plan</th>
+                    <th>Test</th>
+                    <th>Lab Result</th>
+                    <th>Lab Comment</th>
+                    <th>General Comment</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,15 +47,22 @@
     <div class="mt-3">
         <form action="{{ route('consultations.saveResult', $consultation->id) }}" method="POST">
             @csrf
+
             <div class="form-group">
-                <label for="result_comment">Result Comment</label>
-                <textarea class="form-control col-5" id="result_comment" name="result_comment" rows="4"></textarea>
+                <label for="result_comment">General Comment</label>
+                <textarea class="form-control col-5 @error('result_comment') is-invalid @enderror" id="result_comment"
+                    name="result_comment" rows="4"></textarea>
+                @error('result_comment')
+                <div class="invalid-feedback fw-bold">
+                    General comment is required
+                </div>
+                @enderror
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Discharge</button>
         </form>
         @if ($consultation->completed)
         <div class="d-flex justify-content-end">
-        <a href="{{ route('consultations.print', $consultation->id) }}" class="btn btn-primary">Print</a>
+            <a href="{{ route('consultations.print', $consultation->id) }}" class="btn btn-primary">Print</a>
         </div>
         @endif
     </div>

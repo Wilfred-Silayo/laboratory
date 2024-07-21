@@ -17,8 +17,8 @@ class SystemSettingFactory extends Factory
     public function definition(): array
     {
         return [
-            'system_name'=>'D2 Laboratory',
-            'phone'=>'0123456789',
+            'system_name'=>'2D Laboratory',
+            'phone'=>'255620461708',
             'email'=>'dericktitus888@gmail.com',
         ];
     }

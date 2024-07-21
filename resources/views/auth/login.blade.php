@@ -19,7 +19,7 @@
         <!-- End Session Status -->
         <div class="row">
             <div class="col-12 col-sm-8 col-md-6 mb-3 mb-sm-2 mb-md-none">
-                <img src="{{ asset('favicon.jpg') }}" alt="Lab logo" class="w-100 border-2 border-danger">
+                <img src="{{ asset('favicon.png') }}" alt="Lab logo" class="w-100 border-2 border-danger">
             </div>
             <div class="col-12 col-sm-8 col-md-6 pb-3 pb-md-0">
                 <form method="POST" action="{{ route('login.store') }}">

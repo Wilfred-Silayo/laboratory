@@ -83,7 +83,7 @@ $(document).ready(function() {
                                 <td>${consultation.patient.dob}</td>
                                 <td>
                                     <div class="d-flex flex-row">
-                                        <a href="{{ url('/consultations') }}/${consultation.id}/edit" class="btn me-1 btn-sm btn-primary">View</a>
+                                        <a href="{{ url('/consultations') }}/${consultation.id}/edit" class="btn me-1 btn-sm btn-primary">Attend</a>
                                         <a href="{{ url('/patients/consultations') }}/${consultation.patient.id}" class="btn me-1 btn-sm btn-primary">History</a>
                                     </div>
                                 </td>

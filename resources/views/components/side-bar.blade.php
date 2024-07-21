@@ -2,7 +2,7 @@
  <aside class="main-sidebar bg-white text-dark elevation-1">
    <!-- Brand Logo -->
    <a href="index3.html" class="brand-link">
-     <img src="{{asset('favicon.jpg')}}" alt="Lab Logo" class=" w-25 rounded elevation-3 " style="opacity: .8">
+     <img src="{{asset('favicon.png')}}" alt="Lab Logo" class="rounded elevation-2" width="100">
    </a>
 
    <!-- Sidebar -->

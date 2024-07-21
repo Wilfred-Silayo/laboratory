@@ -24,7 +24,8 @@ class LabReportController extends Controller
             $search = $request->get('search');
             $query->whereHas('patient', function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('address', 'LIKE', "%{$search}%")
+                    ->orWhere('occupation', 'LIKE', "%{$search}%")
                     ->orWhere('sex', 'LIKE', "%{$search}%");
             });
         }

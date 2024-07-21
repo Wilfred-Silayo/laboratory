@@ -40,7 +40,8 @@ class ConsultationController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->whereHas('patient', function ($q) use ($search) {
                     $q->where('name', 'LIKE', "%{$search}%")
-                        ->orWhere('email', 'LIKE', "%{$search}%")
+                        ->orWhere('address', 'LIKE', "%{$search}%")
+                        ->orWhere('occupation', 'LIKE', "%{$search}%")
                         ->orWhere('sex', 'LIKE', "%{$search}%");
                 });
             });
@@ -67,7 +68,7 @@ class ConsultationController extends Controller
     public function saveResult(Request $request, Consultation $consultation)
     {
         $request->validate([
-            'result_comment' => 'required|string|max:255',
+            'result_comment' => 'required',
         ]);
 
         // Update the consultation's lab_comment field
